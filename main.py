@@ -3,10 +3,13 @@ from pyunpack import Archive
 
 # Archive(filename="MicroTik.rar", password="123").extractall(".")
 
-pass_lab = ""
+book = []
 
 with open("pass.txt") as f:
-    pass_lab = f.readlines()
+    for el in f.readlines():
+        stroka = el.strip().split("/n")
+        if stroka != ['']:
+            book.append(stroka)
 
 
-print(pass_lab)
+print(book[0])
