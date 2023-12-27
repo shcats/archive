@@ -22,8 +22,15 @@ with open("pass.txt") as f:
             book_lst.extend(stroka)
 
 
-for i, el in enumerate(book_lst[0]):
-    pass
+passwords = []
+
+for w in set_window(len(book_lst[0])):
+    for i, el in enumerate(book_lst[0]):
+        if (i+w[1])<len(book_lst[0]):
+            print(book_lst[0][w[0+i]:w[1+i]])
+        # passwords.extend(book_lst[0][w[0]:w[1]])
+        else:
+            continue
 
 
-print(set_window(10))
+
