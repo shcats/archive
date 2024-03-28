@@ -4,6 +4,8 @@ from pyunpack import PatoolError
 import patoolib
 
 from patoolib.util import log_info
+
+
 def set_window(length: int) -> List:
     result = []
     i = 0
@@ -11,6 +13,14 @@ def set_window(length: int) -> List:
         i += 1
         result.append((0, i))
     return result
+
+
+def start(passwords: List, pass_length: int | None = None):
+    for el in passwords:
+        try:
+            Archive(filename="med_licgen.rar", password=el[:]).extractall(".")
+        except Exception as e:
+            print(e)
 
 
 book_lst = []
@@ -21,7 +31,7 @@ with open("pass.txt") as f:
         if stroka != ['']:
             book_lst.extend(stroka)
 
-
+pass_dict = {}
 passwords = []
 for k in range(len(book_lst)):
     s = book_lst[k]
@@ -29,17 +39,14 @@ for k in range(len(book_lst)):
     for w in set_window(len(book_lst[k])):
         i, j = w
         for _ in range(len_s):
-            if j<=len_s:
+            if j <= len_s:
                 passwords.append([s[i:j]])
-                i=i+1
-                j=j+1
+                i = i+1
+                j = j+1
             else:
                 continue
 
+    pass_dict[k] = passwords.copy()
+    passwords.clear()
 
-for el in passwords:
-        try:
-            patoolib.extract_archive(archive="MicroTik.rar", password=el[:], interactive=False)
-        except Exception as e:
-            print(e)
-
+# start(passwords=passwords)
