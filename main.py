@@ -1,9 +1,9 @@
-# from pyunpack import Archive
+from pyunpack import Archive
 from typing import List
+from pyunpack import PatoolError
+import patoolib
 
-# Archive(filename="MicroTik.rar", password="123").extractall(".")
-
-
+from patoolib.util import log_info
 def set_window(length: int) -> List:
     result = []
     i = 0
@@ -22,8 +22,24 @@ with open("pass.txt") as f:
             book_lst.extend(stroka)
 
 
-for i, el in enumerate(book_lst[0]):
-    pass
+passwords = []
+for k in range(len(book_lst)):
+    s = book_lst[k]
+    len_s = len(book_lst[k])
+    for w in set_window(len(book_lst[k])):
+        i, j = w
+        for _ in range(len_s):
+            if j<=len_s:
+                passwords.append([s[i:j]])
+                i=i+1
+                j=j+1
+            else:
+                continue
 
 
-print(set_window(10))
+for el in passwords:
+        try:
+            patoolib.extract_archive(archive="MicroTik.rar", password=el[:], interactive=False)
+        except Exception as e:
+            print(e)
+
