@@ -1,9 +1,5 @@
 from pyunpack import Archive
 from typing import List
-from pyunpack import PatoolError
-import patoolib
-
-from patoolib.util import log_info
 
 
 def set_window(length: int) -> List:
@@ -15,10 +11,10 @@ def set_window(length: int) -> List:
     return result
 
 
-def start(passwords: List, pass_length: int | None = None):
-    for el in passwords:
+def start(passwd: List, pass_length: int | None = None):
+    for p in passwd:
         try:
-            Archive(filename="med_licgen.rar", password=el[:]).extractall(".")
+            Archive(filename="med_licgen.rar", password=p[:]).extractall(".")
         except Exception as e:
             print(e)
 
